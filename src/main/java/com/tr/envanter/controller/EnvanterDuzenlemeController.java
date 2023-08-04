@@ -1,5 +1,7 @@
 package com.tr.envanter.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,20 +30,17 @@ public class EnvanterDuzenlemeController {
 
 	}
 
-	public ProductResponce<Product> removeProductById(
-			@RequestBody ProductRequest<Product> request) {
-		return new ProductResponce<Product>(
-				duzenlemeService.removeProductById(request.getBody().getId()),
+	public ProductResponce<List<Product>> removeProductById(
+			@RequestBody ProductRequest<List<Integer>> request) {
+		return new ProductResponce<List<Product>>(
+				duzenlemeService.removeProductsById(request.getBody()),
 				HttpStatus.OK);
 
 	}
 
 	@PostMapping("/deleteProduct")
-	public ProductResponce<Product> deleteProduct(
-			@RequestBody ProductRequest<Product> request) {
-		return new ProductResponce<Product>(
-				duzenlemeService.deleteProductFromRepo(request.getBody()),
-				HttpStatus.OK);
+	public void deleteProduct(@RequestBody ProductRequest<Product> request) {
+		duzenlemeService.deleteProductFromRepo(request.getBody());
 
 	}
 	@PostMapping("/updateProduct")

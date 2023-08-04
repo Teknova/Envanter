@@ -1,11 +1,14 @@
 package com.tr.envanter.entity;
 
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -31,12 +34,12 @@ public class Product {
 	@Column(name = "PRODUCT_NAME")
 	String name;
 
-	@OneToOne(mappedBy = "category", cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "CATEGORY_ID")
 	private Category category;
 
-	@OneToMany
-	@Column(name = "WARE_HOUSE_ID")
-	Integer wareHouseId;
+	@OneToMany(mappedBy = "product")
+	private Set<Warehouse> wareHouses;
 
 	@Column(name = "numberOfProducts")
 	Integer numberOfProducts;

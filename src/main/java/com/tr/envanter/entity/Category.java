@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -30,7 +29,6 @@ public class Category {
 	@Column(name = "CATEGORY_NAME")
 	private String categoryName;
 
-	@OneToOne
-	@JoinColumn(name = "PRODUCT_ID")
+	@OneToOne(mappedBy = "category")
 	private Product product;
 }

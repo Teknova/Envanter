@@ -3,6 +3,7 @@ package com.tr.envanter.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,11 +49,26 @@ public class EnvanterDuzenlemeService implements IEnvanterDuzenlemeService {
 
 	@Override
 	public Product updateProduct(Product product) {
+		Product product2 = repository.findById(product.getId()).get();
 
+		if (Objects.nonNull(product.getName())
+				&& !"".equalsIgnoreCase(product.getName())) {
+			product2.setName(product.getName());
+		}
+
+		if (Objects.nonNull(product.getCategory()) && !""
+				.equalsIgnoreCase(product.getCategory().getCategoryName())) {
+			product2.setCategory(product.getCategory());
+		}
+
+		if (Objects.nonNull(product.getNumberOfProducts()) && !""
+				.equalsIgnoreCase(product.getNumberOfProducts().toString())) {
+			product2.setCriticalNumberOfProducts(product.getNumberOfProducts());
+		}
 		logService.addProductProcessToHistory(
 				new ProductHistory(null, product.getId(), new Date(),
 						ProcessTypes.UPDATE.toString(), null));
-		return null;
+		return repository.save(product2);
 	}
 	@Override
 	public void deleteProductFromRepo(Product product) {
